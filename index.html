@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KlavyaUstasi — 10 barmoqda yozish</title>
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--tx:#1e293b;--mut:#64748b;--ac:#6366f1;--bd:#e2e8f0;--ok:#16a34a;--er:#dc2626;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1020;--card:#141b34;--tx:#e5e9f5;--mut:#8b95b3;--ac:#818cf8;--bd:#263052}}
+:root[data-theme=dark]{--bg:#0b1020;--card:#141b34;--tx:#e5e9f5;--mut:#8b95b3;--ac:#818cf8;--bd:#263052}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--tx);font-family:ui-rounded,"Segoe UI",system-ui,sans-serif}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:1rem}.mut{color:var(--mut)}
+.btn{padding:.45rem .9rem;border-radius:.75rem;border:1px solid var(--bd);background:var(--card);font-weight:600;cursor:pointer;transition:.15s}
+.btn:hover{border-color:var(--ac)}.pri{background:var(--ac);color:#fff;border-color:var(--ac)}
+.chip{padding:.25rem .8rem;border-radius:99px;border:1px solid var(--bd);background:var(--card);font-size:.85rem;cursor:pointer}
+.chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.key{width:clamp(24px,6.2vw,48px);height:clamp(30px,6vw,46px);display:grid;place-items:center;border-radius:.5rem;border:1px solid var(--bd);background:color-mix(in srgb,var(--f) 20%,var(--card));font-weight:700;text-transform:uppercase;position:relative;transition:.1s}
+.key.home::after{content:"";position:absolute;bottom:4px;width:40%;height:3px;border-radius:2px;background:var(--f)}
+.key.next{background:var(--f);color:#fff;box-shadow:0 0 0 3px color-mix(in srgb,var(--f) 40%,transparent),0 6px 16px color-mix(in srgb,var(--f) 60%,transparent);animation:pl .7s infinite alternate}
+@keyframes pl{from{transform:translateY(-2px) scale(1.06)}to{transform:translateY(-4px) scale(1.16)}}
+.key.okp{background:var(--ok)!important;color:#fff}.key.erp{background:var(--er)!important;color:#fff}
+#txt{position:relative}#txt span{border-radius:3px;white-space:pre-wrap}#txt .c{color:var(--ok)}
+#txt .cur{background:color-mix(in srgb,var(--ac) 30%,transparent);border-bottom:2px solid var(--ac)}#txt .bad{background:var(--er);color:#fff}
+.lane{position:relative;height:36px;flex:1;border-radius:8px;border-right:6px double var(--tx);background:repeating-linear-gradient(90deg,transparent 0 24px,var(--bd) 24px 26px)}
+.rc{position:absolute;top:2px;font-size:24px;transition:left .15s linear}
+#pop{position:fixed;left:50%;top:22%;translate:-50% 0;font-size:2rem;font-weight:800;color:#f59e0b;opacity:0;pointer-events:none;text-shadow:0 2px 12px rgba(0,0,0,.3)}
+#pop.show{animation:pp .9s}@keyframes pp{0%{opacity:0;scale:.5}20%{opacity:1;scale:1.2}100%{opacity:0;scale:1;transform:translateY(-30px)}}
+@media(prefers-reduced-motion:reduce){.key.next,#pop.show{animation:none}}
+</style>
+</head>
+<body>
+<div id="pop"></div>
+<div class="max-w-5xl mx-auto p-4">
+<header class="flex items-center justify-between gap-3 mb-4">
+ <div class="flex items-center gap-2 font-extrabold text-xl cursor-pointer" onclick="menu()">⌨️ KlavyaUstasi</div>
+ <div class="flex items-center gap-2">
+  <div class="card px-3 py-1.5 text-sm w-36 sm:w-44"><div class="flex justify-between"><b id="lv"></b><span id="xpt" class="mut"></span></div><div class="h-1.5 rounded bg-slate-400/30 mt-1 overflow-hidden"><div id="xpb" class="h-full" style="background:var(--ac)"></div></div></div>
+  <button class="btn" id="bs" title="Ovoz">🔊</button><button class="btn" id="bt" title="Dark / Light">🌙</button>
+ </div>
+</header>
+
+<section id="menu">
+ <h1 class="text-3xl sm:text-4xl font-extrabold text-center mt-2">10 barmoqda tez va xatosiz yozing!</h1>
+ <p class="text-center mut mt-2">Rejim tanlang, XP to'plang, nishonlarni qo'lga kiriting. IT atamalarini ham o'rganasiz 💻</p>
+ <div class="flex items-center justify-center gap-2 mt-4"><span class="mut text-sm">Vaqt (Poyga va Otishma):</span><div id="durs" class="flex gap-1"></div></div>
+ <div class="grid md:grid-cols-3 gap-4 mt-4">
+  <div class="card p-5 flex flex-col"><div class="text-4xl">🏎️</div><h3 class="font-bold text-lg mt-2">Poyga / Musobaqa</h3><p class="mut text-sm grow mt-1">Har bir to'g'ri harf raketangizni marra sari suradi. Botlardan oldin yetib keling!</p><div class="text-xs mut my-3">🏅 Rekord: <b id="b-race"></b></div><button class="btn pri" onclick="start('race')">Boshlash</button></div>
+  <div class="card p-5 flex flex-col"><div class="text-4xl">🚀</div><h3 class="font-bold text-lg mt-2">Kosmik Otishma</h3><p class="mut text-sm grow mt-1">Tepadan tushayotgan IT atamalarini (algorithm, byte, python…) yozib portlating. 3 jon bor!</p><div class="text-xs mut my-3">🏅 Rekord: <b id="b-shoot"></b></div><button class="btn pri" onclick="start('shoot')">Boshlash</button></div>
+  <div class="card p-5 flex flex-col"><div class="text-4xl">🎯</div><h3 class="font-bold text-lg mt-2">Klassik Mashq</h3><p class="mut text-sm mt-1">Klaviatura zonalari bo'yicha mashq:</p><div id="zones" class="flex flex-wrap gap-1 mt-2 grow"></div><div class="text-xs mut my-3">🏅 Rekord: <b id="b-class"></b></div><button class="btn pri" onclick="start('class')">Boshlash</button></div>
+ </div>
+ <h3 class="font-bold mt-6 mb-2">🏆 Nishonlar</h3><div id="badges" class="grid grid-cols-2 sm:grid-cols-5 gap-3"></div>
+</section>
+
+<section id="game" class="hidden">
+ <div class="flex items-center justify-between mb-3"><div class="flex items-center gap-3"><h2 id="gt" class="font-bold text-lg"></h2><span id="hl" class="hidden"></span></div><button class="btn" onclick="menu()">✕ Chiqish (Esc)</button></div>
+ <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center">
+  <div class="card py-2"><div class="mut text-xs">Vaqt</div><b id="ht" class="text-xl"></b></div>
+  <div class="card py-2"><div class="mut text-xs">WPM</div><b id="hw" class="text-xl"></b></div>
+  <div class="card py-2"><div class="mut text-xs">Aniqlik</div><b id="ha" class="text-xl"></b></div>
+  <div class="card py-2"><div class="mut text-xs">Ball</div><b id="hs" class="text-xl"></b></div>
+  <div class="card py-2"><div class="mut text-xs">Kombo</div><b id="hc" class="text-xl"></b></div>
+  <div class="card py-2"><div class="mut text-xs">Streak</div><b id="hst" class="text-xl"></b></div>
+ </div>
+ <div class="h-2 rounded bg-slate-400/30 my-3 overflow-hidden" title="Keyingi kombogacha"><div id="hb" class="h-full transition-all" style="background:linear-gradient(90deg,#f59e0b,#ef4444)"></div></div>
+ <div id="race" class="card p-3 mb-3 space-y-2"></div>
+ <canvas id="cv" class="w-full rounded-2xl mb-3"></canvas>
+ <div id="txt" class="card mono p-4 text-xl sm:text-2xl leading-relaxed h-40 overflow-hidden"></div>
+ <div id="fl" class="text-center my-3 font-medium h-6"></div>
+ <div id="kb" class="space-y-1 select-none"></div>
+</section>
+
+<section id="res" class="hidden"><div id="rs" class="card p-6 max-w-2xl mx-auto text-center"></div></section>
+</div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],rnd=a=>a[Math.floor(Math.random()*a.length)];
+/* ---------- Kontent ---------- */
+const IT="algorithm variable python byte binary code loop array string integer boolean function server network browser pixel cursor keyboard monitor memory storage processor software hardware database internet website email file folder icon window mouse laptop router cloud data input output bug debug syntax compiler script java html login password robot digital kernel cache".split(" ");
+const GEN="apple house water green happy school friend table light music river sunny teacher book pencil garden family summer winter morning market planet bridge purple orange yellow animal doctor engine travel simple strong quick small great learn study speak read write answer city road bread".split(" ");
+const ITS=new Set(IT),ZONES={home:"asdfjkl",top:"qwertyuiop",bot:"zxcvbnm",mix:0},ZN={home:"Home row",top:"Top row",bot:"Bottom row",mix:"Aralash so'zlar"};
+const FN=["Chap jimjiloq","Chap nomsiz","Chap o'rta","Chap ko'rsatkich","O'ng ko'rsatkich","O'ng o'rta","O'ng nomsiz","O'ng jimjiloq","Bosh barmoq"];
+const FC=["#f43f5e","#f97316","#eab308","#22c55e","#14b8a6","#3b82f6","#8b5cf6","#d946ef","#94a3b8"];
+const FM={};["qaz","wsx","edc","rfvtgb","yhnujm","ik","ol","p"," "].forEach((s,i)=>[...s].forEach(c=>FM[c]=i));
+/* ---------- Saqlash, tema, ovoz ---------- */
+let S={xp:0,it:0,games:0,bad:{},best:{}},dur=60,zone="home",mute=false,G=null,raf=0,AC;
+try{Object.assign(S,JSON.parse(localStorage.getItem("klv")||"{}"));mute=localStorage.getItem("klm")=="1"}catch(e){}
+const save=()=>{try{localStorage.setItem("klv",JSON.stringify(S))}catch(e){}};
+function theme(t){document.documentElement.dataset.theme=t;$("#bt").textContent=t=="dark"?"☀️":"🌙";try{localStorage.setItem("klt",t)}catch(e){}}
+let th=null;try{th=localStorage.getItem("klt")}catch(e){}
+theme(th||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));
+$("#bt").onclick=()=>theme(document.documentElement.dataset.theme=="dark"?"light":"dark");
+const sb=()=>{$("#bs").textContent=mute?"🔇":"🔊";try{localStorage.setItem("klm",mute?1:0)}catch(e){}};sb();
+$("#bs").onclick=()=>{mute=!mute;sb()};
+function snd(k){if(mute)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain(),m={k:[660,.05,"sine"],e:[140,.12,"sawtooth"],b:[220,.25,"square"],w:[880,.15,"triangle"]}[k];o.frequency.value=m[0];o.type=m[2];g.gain.value=.06;o.connect(g);g.connect(AC.destination);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+m[1]);o.start();o.stop(AC.currentTime+m[1])}catch(e){}}
+/* ---------- Daraja va nishonlar ---------- */
+const lvl=x=>1+Math.floor(Math.sqrt(x/60));
+function prof(){const l=lvl(S.xp),a=60*(l-1)**2,b=60*l*l;$("#lv").textContent="Level "+l;$("#xpt").textContent=S.xp+" XP";$("#xpb").style.width=(S.xp-a)/(b-a)*100+"%"}
+const BD=[["fast","⚡","Tezkor Barmoq","30+ WPM tezlikka erishing",r=>r.wpm>=30&&r.ch>=20],["flaw","👑","Xatosiz Qirol","30 belgini birorta xatosiz yozing",r=>r.err==0&&r.ch>=30],["it","💻","IT Mutaxassis","25 ta IT atamasini yozing",()=>S.it>=25],["comb","🔥","Kombo Ustasi","x4 kombo to'plang",r=>r.maxC>=4],["win","🥇","Chempion","Poygada 1-o'rinni oling",r=>r.rank==1]];
+const badges=()=>$("#badges").innerHTML=BD.map(b=>`<div class="card p-3 text-center ${S.bad[b[0]]?"":"opacity-40 grayscale"}"><div class="text-3xl">${b[1]}</div><div class="font-bold text-sm">${b[2]}</div><div class="mut text-xs">${b[3]}</div></div>`).join("");
+/* ---------- Menyu ---------- */
+function chips(el,items,cur,fn){el.innerHTML=items.map(([v,l])=>`<button class="chip ${v==cur?"on":""}" data-v="${v}">${l}</button>`).join("");el.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{fn(b.dataset.v);chips(el,items,b.dataset.v,fn)})}
+chips($("#durs"),[[30,"30s"],[60,"60s"],[90,"90s"]],dur,v=>dur=+v);
+chips($("#zones"),Object.keys(ZN).map(k=>[k,ZN[k]]),zone,v=>zone=v);
+const show=id=>["menu","game","res"].forEach(x=>$("#"+x).classList.toggle("hidden",x!=id));
+function menu(){if(G){G.on=0;cancelAnimationFrame(raf)}hint(null);show("menu");prof();badges();["race","shoot","class"].forEach(m=>$("#b-"+m).textContent=S.best[m]||0)}
+/* ---------- Klaviatura ---------- */
+$("#kb").innerHTML=["qwertyuiop","asdfghjkl","zxcvbnm"].map((r,i)=>`<div class="flex justify-center gap-1" style="margin-left:${i*14}px">${[...r].map(c=>`<div class="key${"fj".includes(c)?" home":""}" data-k="${c}" style="--f:${FC[FM[c]]}">${c}</div>`).join("")}</div>`).join("")+`<div class="flex justify-center"><div class="key" data-k=" " style="--f:${FC[8]};width:45%">␣</div></div>`;
+function hint(c){$$(".key.next").forEach(k=>k.classList.remove("next"));const k=c&&$(`.key[data-k="${c}"]`);if(!k){$("#fl").textContent="";return}k.classList.add("next");$("#fl").innerHTML=`<i class="inline-block w-3 h-3 rounded-full align-middle mr-1" style="background:${FC[FM[c]]}"></i>${c==" "?"Probel":c.toUpperCase()} → <b>${FN[FM[c]]}</b>`}
+function flash(c,ok){const k=$(`.key[data-k="${c}"]`),cl=ok?"okp":"erp";if(!k)return;k.classList.add(cl);setTimeout(()=>k.classList.remove(cl),140)}
+function pop(t){const p=$("#pop");p.textContent=t;p.classList.remove("show");void p.offsetWidth;p.classList.add("show")}
+/* ---------- O'yin yadrosi ---------- */
+function start(m){
+ G={m,dur:m=="class"?0:dur,c:0,w:0,st:0,cb:1,mc:1,sc:0,it:0,i:0,ws:0,t:performance.now(),last:performance.now(),on:1,lv:3,hc:null};
+ show("game");$("#gt").textContent={race:"🏎️ Poyga",shoot:"🚀 Kosmik Otishma",class:"🎯 "+ZN[zone]}[m];
+ $("#race").classList.toggle("hidden",m!="race");$("#cv").classList.toggle("hidden",m!="shoot");$("#txt").classList.toggle("hidden",m=="shoot");$("#hl").classList.toggle("hidden",m!="shoot");
+ m=="shoot"?initShoot():initText();hud();cancelAnimationFrame(raf);raf=requestAnimationFrame(loop)}
+function hit(ok){
+ if(ok){G.c++;G.st++;G.cb=1+Math.floor(G.st/10);G.mc=Math.max(G.mc,G.cb);G.sc+=10*G.cb;snd("k");if(G.st%10==0){pop("🔥 KOMBO x"+G.cb+"!");snd("w")}}
+ else{G.w++;G.st=0;G.cb=1;snd("e")}}
+function stats(){const el=(performance.now()-G.t)/1000;return{el,wpm:el>2?Math.round(G.c/5/(el/60)):0,acc:G.c+G.w?Math.round(G.c/(G.c+G.w)*100):100}}
+function hud(){const s=stats();$("#hw").textContent=s.wpm;$("#ha").textContent=s.acc+"%";$("#hs").textContent=G.sc;$("#hc").textContent="x"+G.cb;$("#hst").textContent="🔥 "+G.st;$("#hb").style.width=(G.st%10)*10+"%";$("#hl").textContent="❤️".repeat(Math.max(G.lv,0));
+ $("#ht").textContent=G.dur?Math.max(0,Math.ceil(G.dur-s.el))+"s":Math.floor(s.el)+"s"}
+function loop(){
+ if(!G.on)return;const now=performance.now(),dt=Math.min(.1,(now-G.last)/1000);G.last=now;
+ G.m=="race"?raceUpd():G.m=="shoot"&&shootUpd(dt);
+ if(!G.on)return;hud();
+ if(G.dur&&now-G.t>=G.dur*1000)return end();
+ raf=requestAnimationFrame(loop)}
+function end(){
+ if(!G.on)return;G.on=0;cancelAnimationFrame(raf);hint(null);
+ const s=stats(),el=G.dur?Math.min(s.el,G.dur):s.el,wpm=el>1?Math.round(G.c/5/(el/60)):0;let rank=0;
+ if(G.m=="race"){const p=G.i/G.text.length;rank=1+G.bots.map(b=>bp(b,el)).filter(x=>x>p).length}
+ const xp=Math.round(G.sc/8)+(s.acc>=95?20:0)+(rank==1?30:0),old=lvl(S.xp);S.xp+=xp;S.games++;
+ const r={wpm,acc:s.acc,ch:G.c,err:G.w,maxC:G.mc,rank},nb=BD.filter(b=>!S.bad[b[0]]&&b[4](r));nb.forEach(b=>S.bad[b[0]]=1);
+ const rec=G.sc>(S.best[G.m]||0);if(rec)S.best[G.m]=G.sc;save();prof();
+ const msg=wpm<15?"Yaxshi boshlanish! Mashq qilsangiz tezlik oshadi 💪":wpm<30?"Zo'r! Tezligingiz oshib bormoqda 🚀":"Ajoyib! Siz haqiqiy klaviatura ustasisiz 🏆";
+ $("#rs").innerHTML=`<div class="text-5xl">${rank==1?"🥇":rank==2?"🥈":rank==3?"🥉":G.lv<=0?"💥":"🎉"}</div><h2 class="text-2xl font-extrabold mt-2">${G.m=="race"?rank+"-o'rin!":G.lv<=0?"Jonlar tugadi!":"Natija"}</h2><p class="mut mt-1">${msg}</p>
+ <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 my-5">${[["WPM",wpm],["Aniqlik",s.acc+"%"],["Vaqt",Math.round(el)+"s"],["Ball",G.sc]].map(a=>`<div class="card py-3"><div class="mut text-xs">${a[0]}</div><b class="text-2xl">${a[1]}</b></div>`).join("")}</div>
+ <div class="font-bold">+${xp} XP ${rec?"· 🏅 Yangi rekord!":""}</div>${lvl(S.xp)>old?`<div class="mt-2 font-extrabold" style="color:var(--ac)">⬆️ LEVEL UP! Endi siz Level ${lvl(S.xp)}siz</div>`:""}
+ ${nb.map(b=>`<div class="card p-3 mt-3">${b[1]} Yangi nishon: <b>${b[2]}</b></div>`).join("")}
+ <div class="flex justify-center gap-3 mt-6"><button class="btn pri" onclick="start(G.m)">🔁 Qayta o'ynash</button><button class="btn" onclick="menu()">Menyu</button></div>`;
+ show("res");snd(nb.length||rec?"w":"k")}
+addEventListener("keydown",e=>{
+ if(!G||!G.on)return;if(e.key=="Escape")return menu();
+ if(e.ctrlKey||e.metaKey||e.altKey)return;const c=e.key.toLowerCase();if(c.length!=1||!(c in FM))return;
+ e.preventDefault();G.m=="shoot"?keyShoot(c):keyText(c)});
+/* ---------- Poyga va Klassik (matn rejimlari) ---------- */
+const mixw=n=>Array.from({length:n},()=>Math.random()<.5?rnd(IT):rnd(GEN));
+const bp=(b,sec)=>Math.min(1,b[0]*5/60*sec/G.text.length);
+function initText(){
+ let ws;if(G.m=="race"||zone=="mix")ws=mixw(G.m=="race"?70:25);
+ else ws=Array.from({length:30},()=>{let n=2+Math.floor(Math.random()*4),w="";while(n--)w+=rnd(ZONES[zone]);return w});
+ G.text=ws.join(" ");$("#txt").innerHTML=[...G.text].map(c=>`<span>${c}</span>`).join("");G.sp=$$("#txt span");G.sp[0].classList.add("cur");$("#txt").scrollTop=0;hint(G.text[0]);
+ if(G.m=="race"){const l=lvl(S.xp);G.bots=[[14+l*3,"🛸"],[24+l*3,"🛰️"]];
+  $("#race").innerHTML=[["Siz","🚀"],["Bot-1","🛸"],["Bot-2","🛰️"]].map(a=>`<div class="flex items-center gap-2"><span class="w-12 text-xs mut">${a[0]}</span><div class="lane"><span class="rc" style="${a[0]=="Siz"?"rotate:45deg":""}">${a[1]}</span></div></div>`).join("")}}
+function raceUpd(){const sec=(performance.now()-G.t)/1000,p=[G.i/G.text.length,...G.bots.map(b=>bp(b,sec))];
+ $$(".rc").forEach((e,i)=>e.style.left=`calc(${p[i]*100}% - ${p[i]*30}px)`);if(Math.max(p[1],p[2])>=1)end()}
+function wordDone(i){const w=G.text.slice(G.ws,i);if(ITS.has(w)){S.it++;G.it++}G.ws=i+1}
+function keyText(c){
+ if(c==G.text[G.i]){hit(1);flash(c,1);G.sp[G.i].className="c";wordDone(G.i);G.i++;
+  if(G.i>=G.text.length)return end();
+  G.sp[G.i].classList.add("cur");hint(G.text[G.i]);const b=$("#txt");b.scrollTop=G.sp[G.i].offsetTop-30}
+ else{hit(0);flash(c,0);const s=G.sp[G.i];s.classList.add("bad");setTimeout(()=>s.classList.remove("bad"),180)}}
+/* ---------- Kosmik Otishma ---------- */
+function initShoot(){const c=$("#cv");c.width=c.clientWidth||700;c.height=380;G.wd=[];G.fx=[];G.tg=null;G.spt=0;G.stars=Array.from({length:60},()=>[Math.random()*c.width,Math.random()*380,Math.random()*1.5+.5])}
+function boom(x,y,col){for(let i=0;i<18;i++){const a=Math.random()*6.28,s=40+Math.random()*120;G.fx.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,l:.6,c:col})}}
+function shootUpd(dt){
+ const c=$("#cv"),W=c.width,H=c.height,x=c.getContext("2d"),el=(performance.now()-G.t)/1000;
+ if((G.spt-=dt)<=0){const u=G.wd.map(w=>w.s[0]);let s;for(let i=0;i<12;i++){s=Math.random()<.75?rnd(IT):rnd(GEN);if(!u.includes(s[0]))break}const L=s.length*13;G.wd.push({s,n:0,x:24+L/2+Math.random()*(W-48-L),y:-10,v:30+el*.7});G.spt=Math.max(.8,2.2-el/60)}
+ G.wd.forEach(w=>w.y+=w.v*dt);
+ G.wd=G.wd.filter(w=>{if(w.y>H-50){if(G.tg==w)G.tg=null;G.lv--;G.st=0;G.cb=1;snd("b");boom(w.x,H-40,"#f43f5e");return false}return true});
+ if(G.lv<=0)return end();
+ x.fillStyle="#0b1020";x.fillRect(0,0,W,H);x.fillStyle="#fff";
+ G.stars.forEach(s=>{s[1]=(s[1]+s[2]*dt*8)%H;x.globalAlpha=.3+s[2]/3;x.fillRect(s[0],s[1],s[2],s[2])});x.globalAlpha=1;
+ x.fillStyle="#818cf8";x.beginPath();x.moveTo(W/2,H-36);x.lineTo(W/2-16,H-8);x.lineTo(W/2+16,H-8);x.fill();
+ if(G.tg){x.strokeStyle="#22d3ee";x.lineWidth=2;x.beginPath();x.moveTo(W/2,H-36);x.lineTo(G.tg.x,G.tg.y+8);x.stroke()}
+ x.font="bold 20px ui-monospace,Menlo,Consolas,monospace";x.textAlign="left";
+ G.wd.forEach(w=>{const tw=x.measureText(w.s).width,l=w.x-tw/2,t=w.s.slice(0,w.n);
+  x.fillStyle=G.tg==w?"rgba(34,211,238,.28)":"rgba(255,255,255,.09)";x.fillRect(l-8,w.y-19,tw+16,30);
+  x.fillStyle="#4ade80";x.fillText(t,l,w.y+2);x.fillStyle=ITS.has(w.s)?"#67e8f9":"#e2e8f0";x.fillText(w.s.slice(w.n),l+x.measureText(t).width,w.y+2)});
+ G.fx=G.fx.filter(p=>(p.l-=dt)>0);G.fx.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;x.globalAlpha=p.l/.6;x.fillStyle=p.c;x.fillRect(p.x,p.y,4,4)});x.globalAlpha=1;
+ const w=G.tg||[...G.wd].sort((a,b)=>b.y-a.y)[0],h=w?w.s[w.n]:null;if(h!==G.hc){G.hc=h;hint(h)}}
+function keyShoot(c){
+ if(c==" ")return;
+ if(!G.tg){const w=G.wd.filter(w=>w.s[0]==c).sort((a,b)=>b.y-a.y)[0];if(!w){hit(0);return flash(c,0)}G.tg=w}
+ const w=G.tg;
+ if(w.s[w.n]!=c){hit(0);return flash(c,0)}
+ hit(1);flash(c,1);w.n++;
+ if(w.n==w.s.length){boom(w.x,w.y,"#22d3ee");snd("w");G.sc+=20*G.cb;if(ITS.has(w.s)){S.it++;G.it++}G.wd=G.wd.filter(q=>q!=w);G.tg=null}}
+menu();
+</script>
+</body>
+</html>
