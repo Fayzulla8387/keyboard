@@ -47,15 +47,17 @@ body{background:var(--bg);color:var(--tx);font-family:ui-rounded,"Segoe UI",syst
 <section id="menu">
  <h1 class="text-3xl sm:text-4xl font-extrabold text-center mt-2">10 barmoqda tez va xatosiz yozing!</h1>
  <p class="text-center mut mt-2">Rejim tanlang, XP to'plang, nishonlarni qo'lga kiriting. IT atamalarini ham o'rganasiz 💻</p>
- <div class="flex items-center justify-center gap-2 mt-4"><span class="mut text-sm">Vaqt (Poyga, Otishma va Emoji):</span><div id="durs" class="flex gap-1"></div></div>
- <div class="grid md:grid-cols-3 gap-4 mt-4">
+ <div class="flex items-center justify-center gap-2 mt-4"><span class="mut text-sm">Vaqt (Poyga, Otishma, Emoji, Labirint):</span><div id="durs" class="flex gap-1"></div></div>
+ <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
   <div class="card p-5 flex flex-col"><div class="text-4xl">🏎️</div><h3 class="font-bold text-lg mt-2">Poyga / Musobaqa</h3><p class="mut text-sm grow mt-1">Har bir to'g'ri harf raketangizni marra sari suradi. Botlardan oldin yetib keling!</p><div class="text-xs mut my-3">🏅 Rekord: <b id="b-race"></b></div><button class="btn pri" onclick="start('race')">Boshlash</button></div>
   <div class="card p-5 flex flex-col"><div class="text-4xl">🚀</div><h3 class="font-bold text-lg mt-2">Kosmik Otishma</h3><p class="mut text-sm grow mt-1">Tepadan tushayotgan IT atamalarini (algorithm, byte, python…) yozib portlating. 3 jon bor!</p><div class="text-xs mut my-3">🏅 Rekord: <b id="b-shoot"></b></div><button class="btn pri" onclick="start('shoot')">Boshlash</button></div>
   <div class="card p-5 flex flex-col"><div class="text-4xl">🎯</div><h3 class="font-bold text-lg mt-2">Klassik Mashq</h3><p class="mut text-sm mt-1">Klaviatura zonalari bo'yicha mashq:</p><div id="zones" class="flex flex-wrap gap-1 mt-2 grow"></div><div class="text-xs mut my-3">🏅 Rekord: <b id="b-class"></b></div><button class="btn pri" onclick="start('class')">Boshlash</button></div>
   <div class="card p-5 flex flex-col"><div class="text-4xl">🎈</div><h3 class="font-bold text-lg mt-2">Sharlarni Yorish</h3><p class="mut text-sm grow mt-1">Osmonga uchayotgan sharlar ustidagi harfni bosing — shar yorilsin! Sharlar uchib ketsa jon yo'qotasiz. Harflar asta-sekin qiyinlashadi.</p><div class="text-xs mut my-3">🏅 Rekord: <b id="b-balloon"></b></div><button class="btn pri" onclick="start('balloon')">Boshlash</button></div>
   <div class="card p-5 flex flex-col"><div class="text-4xl">🐱</div><h3 class="font-bold text-lg mt-2">Emoji Topishmoq</h3><p class="mut text-sm grow mt-1">Rasmga qarang va uning inglizcha nomini yozing: 🐱 cat, 🍎 apple, 🚀 rocket… So'zlar qisqadan uzunga o'sib boradi.</p><div class="text-xs mut my-3">🏅 Rekord: <b id="b-emoji"></b></div><button class="btn pri" onclick="start('emoji')">Boshlash</button></div>
+  <div class="card p-5 flex flex-col"><div class="text-4xl">🤖</div><h3 class="font-bold text-lg mt-2">Labirint Yo'lchi</h3><p class="mut text-sm grow mt-1">Robot labirintda ⭐ yulduzga yo'l topishi kerak. Har yo'nalishda bitta so'z turibdi — qayoqqa borishni o'zing tanla va o'sha so'zni yoz! Yo'l topish + tez yozish.</p><div class="text-xs mut my-3">🏅 Rekord: <b id="b-maze"></b></div><button class="btn pri" onclick="start('maze')">Boshlash</button></div>
+  <div class="card p-5 flex flex-col"><div class="text-4xl">🧠</div><h3 class="font-bold text-lg mt-2">Xotira Ustasi</h3><p class="mut text-sm grow mt-1">Klaviatura tugmalari ketma-ket yonadi va nota chaladi. Eslab qol va xuddi shu tartibda bos! Har raundda bitta tugma ko'payadi — qaramay yozishga o'rgatadi.</p><div class="text-xs mut my-3">🏅 Rekord: <b id="b-memo"></b></div><button class="btn pri" onclick="start('memo')">Boshlash</button></div>
  </div>
- <h3 class="font-bold mt-6 mb-2">🏆 Nishonlar</h3><div id="badges" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+ <h3 class="font-bold mt-6 mb-2">🏆 Nishonlar</h3><div id="badges" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
 </section>
 
 <section id="game" class="hidden">
@@ -71,6 +73,7 @@ body{background:var(--bg);color:var(--tx);font-family:ui-rounded,"Segoe UI",syst
  <div class="h-2 rounded bg-slate-400/30 my-3 overflow-hidden" title="Keyingi kombogacha"><div id="hb" class="h-full transition-all" style="background:linear-gradient(90deg,#f59e0b,#ef4444)"></div></div>
  <div id="race" class="card p-3 mb-3 space-y-2"></div>
  <canvas id="cv" class="w-full rounded-2xl mb-3"></canvas>
+ <div id="sm" class="card p-6 text-center hidden"><div id="sg" class="text-2xl sm:text-3xl font-extrabold"></div><div id="sd" class="text-3xl tracking-widest mt-3"></div></div>
  <div id="em" class="card p-6 text-center hidden"><div id="ee" class="text-8xl sm:text-9xl select-none leading-tight"></div><div id="ew" class="mono text-4xl sm:text-5xl font-bold tracking-widest mt-3"></div><div id="eh" class="mut text-sm mt-3"></div></div>
  <div id="txt" class="card mono p-4 text-xl sm:text-2xl leading-relaxed h-40 overflow-hidden"></div>
  <div id="fl" class="text-center my-3 font-medium h-6"></div>
@@ -103,14 +106,14 @@ function snd(k){if(mute)return;try{AC=AC||new(window.AudioContext||window.webkit
 /* ---------- Daraja va nishonlar ---------- */
 const lvl=x=>1+Math.floor(Math.sqrt(x/60));
 function prof(){const l=lvl(S.xp),a=60*(l-1)**2,b=60*l*l;$("#lv").textContent="Level "+l;$("#xpt").textContent=S.xp+" XP";$("#xpb").style.width=(S.xp-a)/(b-a)*100+"%"}
-const BD=[["fast","⚡","Tezkor Barmoq","30+ WPM tezlikka erishing",r=>r.wpm>=30&&r.ch>=20],["flaw","👑","Xatosiz Qirol","30 belgini birorta xatosiz yozing",r=>r.err==0&&r.ch>=30],["it","💻","IT Mutaxassis","25 ta IT atamasini yozing",()=>S.it>=25],["comb","🔥","Kombo Ustasi","x4 kombo to'plang",r=>r.maxC>=4],["win","🥇","Chempion","Poygada 1-o'rinni oling",r=>r.rank==1],["bal","🎈","Shar Ustasi","Bir o'yinda 40 ta shar yoring",r=>r.m=="balloon"&&r.n>=40],["emo","🐱","Emoji Bilimdon","Emoji o'yinida 15 ta so'z yozing",r=>r.m=="emoji"&&r.n>=15]];
+const BD=[["fast","⚡","Tezkor Barmoq","30+ WPM tezlikka erishing",r=>r.wpm>=30&&r.ch>=20],["flaw","👑","Xatosiz Qirol","30 belgini birorta xatosiz yozing",r=>r.err==0&&r.ch>=30],["it","💻","IT Mutaxassis","25 ta IT atamasini yozing",()=>S.it>=25],["comb","🔥","Kombo Ustasi","x4 kombo to'plang",r=>r.maxC>=4],["win","🥇","Chempion","Poygada 1-o'rinni oling",r=>r.rank==1],["bal","🎈","Shar Ustasi","Bir o'yinda 40 ta shar yoring",r=>r.m=="balloon"&&r.n>=40],["emo","🐱","Emoji Bilimdon","Emoji o'yinida 15 ta so'z yozing",r=>r.m=="emoji"&&r.n>=15],["mz","🤖","Labirint Qahramoni","Labirintda 3 ta yulduz toping",r=>r.m=="maze"&&r.n>=3],["mem","🧠","Xotira Ustasi","8 ta tugmali ketma-ketlikni eslang",r=>r.m=="memo"&&r.n>=7]];
 const badges=()=>$("#badges").innerHTML=BD.map(b=>`<div class="card p-3 text-center ${S.bad[b[0]]?"":"opacity-40 grayscale"}"><div class="text-3xl">${b[1]}</div><div class="font-bold text-sm">${b[2]}</div><div class="mut text-xs">${b[3]}</div></div>`).join("");
 /* ---------- Menyu ---------- */
 function chips(el,items,cur,fn){el.innerHTML=items.map(([v,l])=>`<button class="chip ${v==cur?"on":""}" data-v="${v}">${l}</button>`).join("");el.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{fn(b.dataset.v);chips(el,items,b.dataset.v,fn)})}
 chips($("#durs"),[[30,"30s"],[60,"60s"],[90,"90s"]],dur,v=>dur=+v);
 chips($("#zones"),Object.keys(ZN).map(k=>[k,ZN[k]]),zone,v=>zone=v);
 const show=id=>["menu","game","res"].forEach(x=>$("#"+x).classList.toggle("hidden",x!=id));
-function menu(){if(G){G.on=0;cancelAnimationFrame(raf)}hint(null);show("menu");prof();badges();["race","shoot","class","balloon","emoji"].forEach(m=>$("#b-"+m).textContent=S.best[m]||0)}
+function menu(){if(G){G.on=0;cancelAnimationFrame(raf)}hint(null);show("menu");prof();badges();["race","shoot","class","balloon","emoji","maze","memo"].forEach(m=>$("#b-"+m).textContent=S.best[m]||0)}
 /* ---------- Klaviatura ---------- */
 $("#kb").innerHTML=["qwertyuiop","asdfghjkl","zxcvbnm"].map((r,i)=>`<div class="flex justify-center gap-1" style="margin-left:${i*14}px">${[...r].map(c=>`<div class="key${"fj".includes(c)?" home":""}" data-k="${c}" style="--f:${FC[FM[c]]}">${c}</div>`).join("")}</div>`).join("")+`<div class="flex justify-center"><div class="key" data-k=" " style="--f:${FC[8]};width:45%">␣</div></div>`;
 function hint(c){$$(".key.next").forEach(k=>k.classList.remove("next"));const k=c&&$(`.key[data-k="${c}"]`);if(!k){$("#fl").textContent="";return}k.classList.add("next");$("#fl").innerHTML=`<i class="inline-block w-3 h-3 rounded-full align-middle mr-1" style="background:${FC[FM[c]]}"></i>${c==" "?"Probel":c.toUpperCase()} → <b>${FN[FM[c]]}</b>`}
@@ -118,10 +121,10 @@ function flash(c,ok){const k=$(`.key[data-k="${c}"]`),cl=ok?"okp":"erp";if(!k)re
 function pop(t){const p=$("#pop");p.textContent=t;p.classList.remove("show");void p.offsetWidth;p.classList.add("show")}
 /* ---------- O'yin yadrosi ---------- */
 function start(m){
- G={m,dur:m=="class"||m=="balloon"?0:dur,c:0,w:0,st:0,cb:1,mc:1,sc:0,it:0,i:0,ws:0,t:performance.now(),last:performance.now(),on:1,lv:3,hc:null,n:0};
- show("game");$("#gt").textContent={race:"🏎️ Poyga",shoot:"🚀 Kosmik Otishma",balloon:"🎈 Sharlarni Yorish",emoji:"🐱 Emoji Topishmoq",class:"🎯 "+ZN[zone]}[m];
- $("#race").classList.toggle("hidden",m!="race");$("#cv").classList.toggle("hidden",m!="shoot"&&m!="balloon");$("#txt").classList.toggle("hidden",m=="shoot"||m=="balloon"||m=="emoji");$("#hl").classList.toggle("hidden",m!="shoot"&&m!="balloon");$("#em").classList.toggle("hidden",m!="emoji");
- m=="shoot"?initShoot():m=="balloon"?initBalloon():m=="emoji"?initEmoji():initText();hud();cancelAnimationFrame(raf);raf=requestAnimationFrame(loop)}
+ G={m,dur:m=="class"||m=="balloon"||m=="memo"?0:dur,c:0,w:0,st:0,cb:1,mc:1,sc:0,it:0,i:0,ws:0,t:performance.now(),last:performance.now(),on:1,lv:3,hc:null,n:0};
+ show("game");$("#gt").textContent={race:"🏎️ Poyga",shoot:"🚀 Kosmik Otishma",balloon:"🎈 Sharlarni Yorish",emoji:"🐱 Emoji Topishmoq",maze:"🤖 Labirint Yo'lchi",memo:"🧠 Xotira Ustasi",class:"🎯 "+ZN[zone]}[m];
+ $("#race").classList.toggle("hidden",m!="race");$("#cv").classList.toggle("hidden",!["shoot","balloon","maze"].includes(m));$("#txt").classList.toggle("hidden",["shoot","balloon","emoji","maze","memo"].includes(m));$("#hl").classList.toggle("hidden",!["shoot","balloon","memo"].includes(m));$("#em").classList.toggle("hidden",m!="emoji");$("#sm").classList.toggle("hidden",m!="memo");
+ m=="shoot"?initShoot():m=="balloon"?initBalloon():m=="emoji"?initEmoji():m=="maze"?initMaze():m=="memo"?initMemo():initText();hud();cancelAnimationFrame(raf);raf=requestAnimationFrame(loop)}
 function hit(ok){
  if(ok){G.c++;G.st++;G.cb=1+Math.floor(G.st/10);G.mc=Math.max(G.mc,G.cb);G.sc+=10*G.cb;snd("k");if(G.st%10==0){pop("🔥 KOMBO x"+G.cb+"!");snd("w")}}
  else{G.w++;G.st=0;G.cb=1;snd("e")}}
@@ -130,7 +133,7 @@ function hud(){const s=stats();$("#hw").textContent=s.wpm;$("#ha").textContent=s
  $("#ht").textContent=G.dur?Math.max(0,Math.ceil(G.dur-s.el))+"s":Math.floor(s.el)+"s"}
 function loop(){
  if(!G.on)return;const now=performance.now(),dt=Math.min(.1,(now-G.last)/1000);G.last=now;
- G.m=="race"?raceUpd():G.m=="shoot"?shootUpd(dt):G.m=="balloon"&&balloonUpd(dt);
+ G.m=="race"?raceUpd():G.m=="shoot"?shootUpd(dt):G.m=="balloon"?balloonUpd(dt):G.m=="maze"&&mazeUpd(dt);
  if(!G.on)return;hud();
  if(G.dur&&now-G.t>=G.dur*1000)return end();
  raf=requestAnimationFrame(loop)}
@@ -151,7 +154,7 @@ function end(){
 addEventListener("keydown",e=>{
  if(!G||!G.on)return;if(e.key=="Escape")return menu();
  if(e.ctrlKey||e.metaKey||e.altKey)return;const c=e.key.toLowerCase();if(c.length!=1||!(c in FM))return;
- e.preventDefault();({shoot:keyShoot,balloon:keyBalloon,emoji:keyEmoji}[G.m]||keyText)(c)});
+ e.preventDefault();({shoot:keyShoot,balloon:keyBalloon,emoji:keyEmoji,maze:keyMaze,memo:keyMemo}[G.m]||keyText)(c)});
 /* ---------- Poyga va Klassik (matn rejimlari) ---------- */
 const mixw=n=>Array.from({length:n},()=>Math.random()<.5?rnd(IT):rnd(GEN));
 const bp=(b,sec)=>Math.min(1,b[0]*5/60*sec/G.text.length);
@@ -236,6 +239,59 @@ function keyEmoji(c){
   if(G.k>=w.length){G.n++;G.sc+=20*G.cb;pop("✅ "+G.ew[2]+"!");snd("w");return nextEmoji()}
   renderEw()}
  else{hit(0);flash(c,0);const e=$("#ew");e.classList.remove("sh");void e.offsetWidth;e.classList.add("sh")}}
+/* ---------- Labirint Yo'lchi ---------- */
+const DX=[0,1,0,-1],DY=[-1,0,1,0],MW=[...IT,...GEN].filter(w=>w.length<=5);
+function newMaze(){
+ const L=G.n,cols=Math.min(7,4+Math.floor(L/2)),rows=Math.min(4,3+Math.floor(L/3)),K=(a,b)=>a+","+b;
+ const op=Array.from({length:rows},()=>Array.from({length:cols},()=>[0,0,0,0])),seen=new Set(["0,0"]),st=[[0,0]],dist={"0,0":0};let far=[0,0];
+ while(st.length){const [x,y]=st[st.length-1],nb=[0,1,2,3].filter(d=>{const a=x+DX[d],b=y+DY[d];return a>=0&&b>=0&&a<cols&&b<rows&&!seen.has(K(a,b))});
+  if(!nb.length){st.pop();continue}
+  const d=rnd(nb),a=x+DX[d],b=y+DY[d];op[y][x][d]=1;op[b][a][(d+2)%4]=1;seen.add(K(a,b));dist[K(a,b)]=dist[K(x,y)]+1;if(dist[K(a,b)]>dist[K(...far)])far=[a,b];st.push([a,b])}
+ Object.assign(G,{op,cols,rows,gx:far[0],gy:far[1],px:0,py:0,rx:0,ry:0,tr:[]});newWords()}
+function newWords(){
+ const u=[],mw=[];[0,1,2,3].sort(()=>Math.random()-.5).forEach(d=>{if(!G.op[G.py][G.px][d])return;let w,k=0;do{w=rnd(MW)}while(u.includes(w[0])&&k++<40);u.push(w[0]);mw[d]=w});
+ G.mw=mw;G.td=-1;G.tn=0;hint(null)}
+function initMaze(){const c=$("#cv");c.width=c.clientWidth||700;c.height=380;G.n=0;newMaze()}
+function stepMaze(d){
+ G.tr.push([G.px,G.py]);G.px+=DX[d];G.py+=DY[d];G.sc+=10*G.cb;
+ if(G.px==G.gx&&G.py==G.gy){G.n++;G.sc+=50*G.n;pop("⭐ "+G.n+"-yulduz!");snd("w");return newMaze()}
+ newWords()}
+function keyMaze(c){
+ if(c==" ")return;
+ if(G.td<0){const d=[0,1,2,3].find(d=>G.mw[d]&&G.mw[d][0]==c);if(d==null){hit(0);return flash(c,0)}G.td=d;G.tn=0}
+ const w=G.mw[G.td];
+ if(w[G.tn]!=c){hit(0);return flash(c,0)}
+ hit(1);flash(c,1);G.tn++;
+ if(G.tn==w.length)stepMaze(G.td);else hint(w[G.tn])}
+function mazeUpd(dt){
+ const c=$("#cv"),W=c.width,H=c.height,x=c.getContext("2d"),cs=Math.min((W-24)/G.cols,(H-24)/G.rows),ox=(W-cs*G.cols)/2,oy=(H-cs*G.rows)/2,k=Math.min(1,dt*14);
+ G.rx+=(G.px-G.rx)*k;G.ry+=(G.py-G.ry)*k;
+ x.fillStyle="#0b1020";x.fillRect(0,0,W,H);x.fillStyle="#141b34";x.fillRect(ox,oy,cs*G.cols,cs*G.rows);
+ x.fillStyle="rgba(129,140,248,.3)";G.tr.forEach(t=>{x.beginPath();x.arc(ox+(t[0]+.5)*cs,oy+(t[1]+.5)*cs,5,0,6.3);x.fill()});
+ x.strokeStyle="#818cf8";x.lineWidth=4;x.lineCap="round";x.beginPath();
+ for(let j=0;j<G.rows;j++)for(let i=0;i<G.cols;i++){const X=ox+i*cs,Y=oy+j*cs,o=G.op[j][i];
+  if(!o[0]){x.moveTo(X,Y);x.lineTo(X+cs,Y)}if(!o[1]){x.moveTo(X+cs,Y);x.lineTo(X+cs,Y+cs)}if(!o[2]){x.moveTo(X,Y+cs);x.lineTo(X+cs,Y+cs)}if(!o[3]){x.moveTo(X,Y);x.lineTo(X,Y+cs)}}
+ x.stroke();x.textAlign="center";x.textBaseline="middle";x.font=cs*.42+"px serif";
+ x.fillText("⭐",ox+(G.gx+.5)*cs,oy+(G.gy+.5)*cs);x.fillText("🤖",ox+(G.rx+.5)*cs,oy+(G.ry+.5)*cs);
+ x.font="bold 14px ui-monospace,Menlo,Consolas,monospace";
+ [0,1,2,3].forEach(d=>{const w=G.mw[d];if(!w)return;const bx=ox+(G.px+.5)*cs+DX[d]*cs/2,by=oy+(G.py+.5)*cs+DY[d]*cs/2,tw=x.measureText(w).width,on=G.td==d,t=on?w.slice(0,G.tn):"";
+  x.fillStyle=on?"#0e7490":"#334155";x.fillRect(bx-tw/2-8,by-13,tw+16,26);x.textAlign="left";
+  x.fillStyle="#4ade80";x.fillText(t,bx-tw/2,by+1);x.fillStyle="#fff";x.fillText(w.slice(t.length),bx-tw/2+x.measureText(t).width,by+1);x.textAlign="center"})}
+/* ---------- Xotira Ustasi ---------- */
+function tone(c){if(mute)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=[262,294,330,349,392,440,494,523,200][FM[c]];o.type="triangle";g.gain.value=.12;o.connect(g);g.connect(AC.destination);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+.35);o.start();o.stop(AC.currentTime+.35)}catch(e){}}
+const live=g=>G==g&&g.on;
+function dots(){$("#sd").textContent=G.q.map((c,i)=>i<G.p?"🟢":"⚪").join(" ")}
+function initMemo(){G.q=[];G.ph="";nextMemo()}
+function nextMemo(){const n=G.n,pool=n<3?"asdfjkl":n<6?"asdfjklqweruiop":"abcdefghijklmnopqrstuvwxyz";G.q.push(rnd([...pool]));replay()}
+function replay(){
+ const g=G,sp=Math.max(380,700-G.n*25);G.ph="show";G.p=0;$("#sg").textContent="👀 Kuzating...";dots();
+ G.q.forEach((c,i)=>setTimeout(()=>{if(!live(g))return;hint(c);tone(c);setTimeout(()=>live(g)&&hint(null),sp*.6)},900+i*sp));
+ setTimeout(()=>{if(!live(g))return;g.ph="in";hint(null);$("#sg").textContent="⌨️ Endi sen! Xuddi shu tartibda bos";dots()},900+G.q.length*sp)}
+function keyMemo(c){
+ if(c==" "||G.ph!="in")return;const g=G;
+ if(c==G.q[G.p]){hit(1);flash(c,1);tone(c);G.p++;dots();
+  if(G.p==G.q.length){G.ph="";G.n++;G.sc+=5*G.q.length*G.cb;pop("🧠 "+G.q.length+" ta tugma!");snd("w");$("#sg").textContent="✅ Barakalla!";setTimeout(()=>live(g)&&nextMemo(),1000)}}
+ else{hit(0);flash(c,0);G.lv--;if(G.lv<=0)return end();G.ph="";$("#sg").textContent="❌ Xato! Yana bir bor kuzating";setTimeout(()=>live(g)&&replay(),1100)}}
 menu();
 </script>
 </body>
